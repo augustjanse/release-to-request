@@ -28,8 +28,12 @@ function Import(){
 		var dd_val = $('select option').filter(function () { return $(this).html() == type;}).val(); 
 		$('#releasetype').val(dd_val);
 
-		// allow all formats, bitrates and media
-		$('#toggle_formats').click();
-		$('#toggle_bitrates').click();
-		$('#toggle_media').click();
-		})}
+		})
+
+	// allow all formats, bitrates and media
+	$('#toggle_formats').click();
+	$('#toggle_bitrates').click();
+	$('#toggle_media').click();
+
+}
+
