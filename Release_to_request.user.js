@@ -18,13 +18,13 @@ function Import(){
 		// get metadata from XML
 		var artist = $(xml).find("name").text();	
 		var title = $(xml).find("title").text();
-		var date = $(xml).find("first-release-date").text();
+		var year = $(xml).find("first-release-date").text().match("[0-9]{4}")[0];
 		var type = $(xml).find("release-group").attr("type");
 
 		// enter metadata in form
 		$('[name="artists[]"]').val(artist);	
 		$('[name="title"]').val(title);	
-		$('[name="year"]').val(date);	
+		$('[name="year"]').val(year);	
 		var dd_val = $('select option').filter(function () { return $(this).html() == type;}).val(); 
 		$('#releasetype').val(dd_val);
 
