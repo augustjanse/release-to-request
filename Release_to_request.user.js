@@ -35,5 +35,8 @@ function Import(){
 	$('#toggle_bitrates').click();
 	$('#toggle_media').click();
 
+	var text = "Any release of this accepted.\n\n";
+	text += url;
+	$('textarea[name="description"]').text(text);
 }
 
