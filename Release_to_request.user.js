@@ -53,7 +53,7 @@ function enterReleaseGroup(xml) {
 	var artist = $(xml).find("name").text();	
 	var title = $(xml).find("title").text();
 	var year = $(xml).find("first-release-date").text().match("[0-9]{4}")[0];
-	var type = $(xml).find("release-group").attr("type");
+	var type = matchType(xml, $("#categories"));
 
 	// enter metadata in form
 	$('[name="artists[]"]').val(artist);	
@@ -90,4 +90,57 @@ function listUrls(xml, type, intro) {
 	if (list != "") {	
 		text += list;
 	}
+}
+
+function matchType(xml, categoryDropdown) {
+	// "Audiobook" matches to the "Audiobooks" category
+	if($(xml).find("secondary-type").text().indexOf("Audiobook") != -1) {
+		categoryDropdown.val("Audiobooks");	
+	}
+
+	var type = null;
+	// try all secondary types
+	$(xml).find("secondary-type").each(function() {
+	switch ($(this).text()) {
+		// types named the same
+		case "Compilation":
+		case "Soundtrack":
+		case "Interview":
+		case "Remix":
+			type = $(this).text();
+			return false;
+		
+		// types named slightly differently
+		case "Live":
+			type = "Live album";
+			return false;
+		case "DJ-mix":
+			type = "DJ Mix";
+			return false;
+		case "Mixtape/Street":
+			type = "Mixtape";
+			return false;
+
+		// "Soundtrack" has no equivalent
+		}
+	});
+
+	// return if match found
+	if (type != null) {
+		return type;
+	}
+
+	// use primary type if no match on secondary type
+	switch ($(xml).find("primary-type").text()) {
+		case "Album":
+		case "Single":
+		case "EP":
+			type = $(xml).find("primary-type").text();
+			break;
+
+		// no match for "Broadcast" or "Other"
+	}
+
+	// if no match, return null
+	return null;
 }
