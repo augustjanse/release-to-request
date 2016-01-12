@@ -65,8 +65,8 @@ function enterReleaseGroup(xml) {
 
 function enterRelease(xml) {
 	// get URL relationships
-	text = "Any release of this accepted.\n\n";
-	text += "MusicBrainz\n" + url + "\n\n";
+	text = "Any release of this accepted. Thanks!\n\n";
+	text += "[b]MusicBrainz[/b]\n[*]" + url + "\n";
 
 	listUrls(xml, "download for free", "Download for free");
 	listUrls(xml, "purchase for download", "Purchase for download");
@@ -81,13 +81,13 @@ function listUrls(xml, type, intro) {
 
 	$(xml).find('[type="' + type + '"] target').each(function() {
 		if (list == "") {
-			list += intro + "\n";
+			list += "[b]" + intro + "[/b]\n";
 		}
 
-		list += $(this).text() + "\n";
+		list += "[*]" + $(this).text() + "\n";
 	});
 	
 	if (list != "") {	
-		text += list + "\n";
+		text += list;
 	}
 }
