@@ -43,9 +43,9 @@ function importMetadata(){
 	});
 
 	// allow all formats, bitrates and media
-	$('#toggle_formats').click();
-	$('#toggle_bitrates').click();
-	$('#toggle_media').click();
+	$('#toggle_formats').prop("checked", true).change();
+	$('#toggle_bitrates').prop("checked", true).change();
+	$('#toggle_media').prop("checked", true).change();
 }
 
 function enterReleaseGroup(xml) {
