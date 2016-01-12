@@ -65,11 +65,6 @@ function enterReleaseGroup(xml) {
 
 function enterRelease(xml) {
 	// get URL relationships
-	var downloadFree = ""; // "download for free"
-	var downloadPurchase = ""; // "purchase for download"
-	var mailOrderPurchase = ""; // "purchase for mail-order"
-	var amazon = ""; // "amazon asin"
-
 	text = "Any release of this accepted.\n\n";
 	text += "MusicBrainz\n" + url + "\n\n";
 
