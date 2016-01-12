@@ -14,21 +14,28 @@ function Import(){
 	var input = $("#mbid_box").val();
 	var mbid = input.match("[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+")[0];
 	var url = 'http://musicbrainz.org/release-group/' + mbid;
-	$.get('https://musicbrainz.org/ws/2/release-group/' + mbid + '?inc=artists', function(xml) {
-		// get metadata from XML
-		var artist = $(xml).find("name").text();	
-		var title = $(xml).find("title").text();
-		var year = $(xml).find("first-release-date").text().match("[0-9]{4}")[0];
-		var type = $(xml).find("release-group").attr("type");
+	$.ajax({
+		method: 'GET',
+		url: 'https://musicbrainz.org/ws/2/release-group/' + mbid + '?inc=artists',
+	       	success: function(xml) {
+			// get metadata from XML
+			var artist = $(xml).find("name").text();	
+			var title = $(xml).find("title").text();
+			var year = $(xml).find("first-release-date").text().match("[0-9]{4}")[0];
+			var type = $(xml).find("release-group").attr("type");
 
-		// enter metadata in form
-		$('[name="artists[]"]').val(artist);	
-		$('[name="title"]').val(title);	
-		$('[name="year"]').val(year);	
-		var dd_val = $('select option').filter(function () { return $(this).html() == type;}).val(); 
-		$('#releasetype').val(dd_val);
+			// enter metadata in form
+			$('[name="artists[]"]').val(artist);	
+			$('[name="title"]').val(title);	
+			$('[name="year"]').val(year);	
+			var dd_val = $('select option').filter(function () { return $(this).html() == type;}).val(); 
+			$('#releasetype').val(dd_val);
 
-		})
+		},
+		error: function(xml) {
+			console.log("MB request failed");
+		}
+	});
 
 	// allow all formats, bitrates and media
 	$('#toggle_formats').click();
