@@ -7,8 +7,15 @@
 // @grant       none
 // ==/UserScript==
 
+var debugging = false;
+
 $("tbody").prepend('<tr> <td class="label">Import from MusicBrainz</td> <td> <input id="mbid_box" size="8" value="" type="text"> <input value="Import" id="mbid_button" type="button"> </td> </tr>');
 $("#mbid_button").click(Import);
+
+if(debugging) {
+	$("#mbid_box").val("0e5b4580-4e6d-43e6-8384-0d13ac52a9d7");
+	$("#mbid_button").click();
+}
 
 function Import(){
 	var input = $("#mbid_box").val();
