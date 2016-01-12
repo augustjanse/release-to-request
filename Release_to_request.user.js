@@ -142,5 +142,5 @@ function matchType(xml, categoryDropdown) {
 	}
 
 	// if no match, return null
-	return null;
+	return type;
 }
