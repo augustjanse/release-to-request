@@ -178,7 +178,7 @@ function setArtists(xml) {
 	$(xml).find("name-credit").each(function(index) {
 		// do for all but the first
 		if (index != 0) {
-			$("#artistfields a.brackets:nth-child(4)").click();
+			$("#artistfields a.brackets:nth-of-type(1)").click();
 		}
 
 		var artist = $(this).find("artist name").text();
