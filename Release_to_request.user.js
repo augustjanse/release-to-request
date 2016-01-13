@@ -84,7 +84,11 @@ function listUrls(xml, type, intro) {
 			list += "[b]" + intro + "[/b]\n";
 		}
 
-		list += "[*]" + $(this).text() + "\n";
+		url = $(this).text();
+		if (url.indexOf("itunes.apple.com") != -1) {
+			setCoverArt(url);
+		}	
+		list += "[*]" + url + "\n";
 	});
 	
 	if (list != "") {	
@@ -143,4 +147,16 @@ function matchType(xml, categoryDropdown) {
 
 	// if no match, return null
 	return type;
+}
+
+function setCoverArt(url) {
+	$.ajax({
+		type: "GET",
+		url: url,
+		success: function(data) {
+			image = $(data).find("#left-stack img.artwork").attr("src-swap-high-dpi").replace("340x340", "1200x1200");
+			$('[name="image"]').val(image);
+		},
+		error: function() { console.log("iTunes request failed"); }
+	});
 }
