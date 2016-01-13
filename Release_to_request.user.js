@@ -160,3 +160,7 @@ function setCoverArt(url) {
 		error: function() { console.log("iTunes request failed"); }
 	});
 }
+
+function reset() {
+	$('input[type="text"]:not(#mbid_box)').val("");
+}
