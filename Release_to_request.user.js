@@ -18,6 +18,8 @@ if(debugging) {
 }
 
 function importMetadata(){
+	reset();
+
 	var input = $("#mbid_box").val();
 	var mbid = input.match("[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+")[0];
 	url = 'http://musicbrainz.org/release-group/' + mbid;
@@ -162,5 +164,6 @@ function setCoverArt(url) {
 }
 
 function reset() {
+	$('select option:first-child').attr("selected", "selected").change();
 	$('input[type="text"]:not(#mbid_box)').val("");
 }
