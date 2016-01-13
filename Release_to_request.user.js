@@ -52,13 +52,12 @@ function importMetadata(){
 
 function enterReleaseGroup(xml) {
 	// get metadata from XML
-	var artist = $(xml).find("name").text();	
 	var title = $(xml).find("title").text();
 	var year = $(xml).find("first-release-date").text().match("[0-9]{4}")[0];
 	var type = matchType(xml, $("#categories"));
 
 	// enter metadata in form
-	$('[name="artists[]"]').val(artist);	
+	setArtists(xml);
 	$('[name="title"]').val(title);	
 	$('[name="year"]').val(year);	
 	var dd_val = $('select option').filter(function () { return $(this).html() == type;}).val(); 
@@ -167,4 +166,25 @@ function reset() {
 	$('select option:first-child').attr("selected", "selected").change();
 	$('input[type="text"]:not(#mbid_box)').val("");
 	$('textarea[name="description"]').val("");
+}
+
+function setArtists(xml) {
+	var guest = false;
+	$(xml).find("name-credit").each(function(index) {
+		// do for all but the first
+		if (index != 0) {
+			$("#artistfields a.brackets:nth-child(4)").click();
+		}
+
+		var artist = $(this).find("artist name").text();
+		$('[name="artists[]"]').eq(index).val(artist);	
+		
+		if ($(this).prev().attr("joinphrase") == " feat. ") {
+			guest = true;
+		}
+
+		if (guest) {
+			$('[name="importance[]"]').eq(index).val(2);	
+		}
+	});
 }
