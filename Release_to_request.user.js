@@ -75,7 +75,7 @@ function enterRelease(xml) {
 	listUrls(xml, "purchase for mail-order", "Purchase for mail-order");
 	listUrls(xml, "amazon asin", "Amazon");
 
-	$('textarea[name="description"]').text(text.trim());
+	$('textarea[name="description"]').val(text.trim());
 }
 
 function listUrls(xml, type, intro) {
@@ -166,4 +166,5 @@ function setCoverArt(url) {
 function reset() {
 	$('select option:first-child').attr("selected", "selected").change();
 	$('input[type="text"]:not(#mbid_box)').val("");
+	$('textarea[name="description"]').val("");
 }
