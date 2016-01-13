@@ -166,6 +166,11 @@ function reset() {
 	$('select option:first-child').attr("selected", "selected").change();
 	$('input[type="text"]:not(#mbid_box)').val("");
 	$('textarea[name="description"]').val("");
+
+	while ($("#artistfields input").length != 1) {
+		console.log($("#artistfields input").length);
+		$("#artistfields a.brackets:nth-of-type(2)").click();
+	}
 }
 
 function setArtists(xml) {
