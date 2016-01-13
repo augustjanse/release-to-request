@@ -99,7 +99,7 @@ function listUrls(xml, type, intro) {
 function matchType(xml, categoryDropdown) {
 	// "Audiobook" matches to the "Audiobooks" category
 	if($(xml).find("secondary-type").text().indexOf("Audiobook") != -1) {
-		categoryDropdown.val("Audiobooks");	
+		categoryDropdown.val("Audiobooks").change();	
 	}
 
 	var type = null;
