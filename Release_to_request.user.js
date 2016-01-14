@@ -69,7 +69,10 @@ function importMetadata(){
 function enterReleaseGroup(xml) {
 	// get metadata from XML
 	var title = $(xml).find("title").text();
-	var year = $(xml).find("first-release-date").text().match("[0-9]{4}")[0];
+	var year = $(xml).find("first-release-date").text();
+	if (year != "") {
+		year = year.match("[0-9]{4}")[0];
+	}
 	var type = matchType(xml, $("#categories"));
 
 	// enter metadata in form
@@ -83,7 +86,10 @@ function enterReleaseGroup(xml) {
 function enterRelease(xml) {
 	// get metadata from XML
 	var title = $(xml).find("release > title").text();
-	var year = $(xml).find("release date").text().match("[0-9]{4}")[0];
+	var year = $(xml).find("release date").text();
+	if (year != "") {
+		year = year.match("[0-9]{4}")[0];
+	}
 	var type = matchType(xml, $("#categories"));
 	if($(xml).find("release status").text() == "Bootleg") {
 		type = "Bootleg";
