@@ -262,7 +262,11 @@ function setEntity(input, mbid) {
 
 function setDescription(xml) {
 	// get URL relationships
-	text = "Any release of this accepted. Thanks!\n\n";
+	if (entity == "release-group") {
+		text = "Any release of this accepted. Thanks!\n\n";
+	} else if (entity == "release") {
+		text = "Only this specific release accepted. Thanks!\n\n";
+	}
 	text += "[b]MusicBrainz[/b]\n[*]" + url + "\n";
 
 	listUrls(xml, "download for free", "Download for free");
