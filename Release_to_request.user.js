@@ -52,7 +52,7 @@ function importMetadata(){
 		// get release metadata
 		$.ajax({
 			method: 'GET',
-			url: 'https://musicbrainz.org/ws/2/release/' + mbid + '?inc=artists+labels+release-groups+url-rels',
+			url: 'https://musicbrainz.org/ws/2/release/' + mbid + '?inc=artists+labels+media+release-groups+url-rels',
 			success: enterRelease,
 			error: function(xml) {
 				console.log("Release request failed");
@@ -60,10 +60,14 @@ function importMetadata(){
 		});
 	}
 
-	// allow all formats, bitrates and media
+	// allow all formats and bitrates
 	$('#toggle_formats').prop("checked", true).change();
 	$('#toggle_bitrates').prop("checked", true).change();
-	$('#toggle_media').prop("checked", true).change();
+	
+	// if release, toggle allowed media elsewhere
+	if (entity == "release-group") {
+		$('#toggle_media').prop("checked", true).change();
+	}
 }
 
 function enterReleaseGroup(xml) {
@@ -107,6 +111,7 @@ function enterRelease(xml) {
 
 	$('[name="recordlabel"]').val(label);	
 	$('[name="cataloguenumber"]').val(catalogNumber);	
+	setMedium(xml, $("#media_tr"));
 
 	setDescription(xml);
 }
@@ -264,4 +269,49 @@ function setDescription(xml) {
 	listUrls(xml, "amazon asin", "Amazon");
 
 	$('textarea[name="description"]').val(text.trim());
+}
+
+function setMedium(xml, boxes) {
+	$(xml).find("format").each(function() {
+	switch ($(this).text()) {
+		case "CD":
+		case "CD-R":
+		case "8cm CD":
+		case "HDCD":
+		case "Enhanced CD":
+		case "SHM-CD":
+			$(boxes).find("#media_0").prop("checked", true).change();
+			break;
+
+		case "Digital Media":
+			$(boxes).find("#media_7").prop("checked", true).change();
+			break;
+
+		case "Vinyl":
+		case '12" Vinyl':
+		case '7" Vinyl':
+		case '10" Vinyl':
+			$(boxes).find("#media_2").prop("checked", true).change();
+			break;
+
+		case "Cassette":
+			$(boxes).find("#media_6").prop("checked", true).change();
+			break;
+
+		case "DVD":
+		case "DVD-Video":
+		case "DVD-Audio":
+			$(boxes).find("#media_1").prop("checked", true).change();
+			break;
+
+		case "SACD":
+		case "Hybrid SACD":
+			$(boxes).find("#media_4").prop("checked", true).change();
+			break;
+
+		case "Blu-ray":
+			$(boxes).find("#media_8").prop("checked", true).change();
+			break;
+	}
+	});
 }
