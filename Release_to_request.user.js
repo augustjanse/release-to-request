@@ -203,7 +203,7 @@ function setCoverArt(url) {
 
 function reset() {
 	$('select option:first-child').attr("selected", "selected").change();
-	$('input[type="text"]:not(#mbid_box)').val("");
+	$('input[type="text"]:not(#mbid_box):not(#amount_box)').val("");
 	$('textarea[name="description"]').val("");
 
 	while ($("#artistfields input").length != 1) {
