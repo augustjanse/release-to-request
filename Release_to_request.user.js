@@ -274,6 +274,8 @@ function setDescription(xml) {
 	listUrls(xml, "purchase for mail-order", "Purchase for mail-order");
 	listUrls(xml, "amazon asin", "Amazon");
 
+	text += "This request was automatically generated using the userscript [url=https://github.com/augustjanse/release-to-request]Release to request[/url]."
+
 	$('textarea[name="description"]').val(text.trim());
 }
 
