@@ -26,7 +26,7 @@ function importMetadata(){
 	setEntity(input, mbid);
 	console.log(entity + " found");
 
-	url = 'http://musicbrainz.org/release-group/' + mbid;
+	url = 'http://musicbrainz.org/' + entity + '/' + mbid;
 
 	if (entity == "release-group") {
 		// get metadata from release group
