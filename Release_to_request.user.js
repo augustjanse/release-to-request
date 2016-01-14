@@ -52,7 +52,7 @@ function importMetadata(){
 		// get release metadata
 		$.ajax({
 			method: 'GET',
-			url: 'https://musicbrainz.org/ws/2/release/' + mbid + '?inc=artists+release-groups+url-rels',
+			url: 'https://musicbrainz.org/ws/2/release/' + mbid + '?inc=artists+labels+release-groups+url-rels',
 			success: enterRelease,
 			error: function(xml) {
 				console.log("Release request failed");
@@ -81,6 +81,27 @@ function enterReleaseGroup(xml) {
 }
 
 function enterRelease(xml) {
+	// get metadata from XML
+	var title = $(xml).find("release > title").text();
+	var year = $(xml).find("release date").text().match("[0-9]{4}")[0];
+	var type = matchType(xml, $("#categories"));
+	if($(xml).find("release status").text() == "Bootleg") {
+		type = "Bootleg";
+	}
+
+	var label = $(xml).find("label name").text();
+	var catalogNumber = $(xml).find("label-info catalog-number").text();
+
+	// enter metadata in form
+	setArtists(xml);
+	$('[name="title"]').val(title);	
+	$('[name="year"]').val(year);	
+	var dd_val = $('select option').filter(function () { return $(this).html() == type;}).val(); 
+	$('#releasetype').val(dd_val);
+
+	$('[name="recordlabel"]').val(label);	
+	$('[name="cataloguenumber"]').val(catalogNumber);	
+
 	setDescription(xml);
 }
 
