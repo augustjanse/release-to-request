@@ -209,6 +209,8 @@ function reset() {
 	while ($("#artistfields input").length != 1) {
 		$("#artistfields a.brackets:nth-of-type(2)").click();
 	}
+
+	$('input[type="checkbox"]').prop("checked", false).change();
 }
 
 function setArtists(xml) {
