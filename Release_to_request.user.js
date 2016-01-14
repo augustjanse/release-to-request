@@ -28,25 +28,37 @@ function importMetadata(){
 
 	url = 'http://musicbrainz.org/release-group/' + mbid;
 
-	// get release group metadata
-	$.ajax({
-		method: 'GET',
-		url: 'https://musicbrainz.org/ws/2/release-group/' + mbid + '?inc=artists',
-	       	success: enterReleaseGroup,
-		error: function(xml) {
-			console.log("Release group request failed");
-		}
-	});
+	if (entity == "release-group") {
+		// get metadata from release group
+		$.ajax({
+			method: 'GET',
+			url: 'https://musicbrainz.org/ws/2/release-group/' + mbid + '?inc=artists',
+			success: enterReleaseGroup,
+			error: function(xml) {
+				console.log("Release group request failed");
+			}
+		});
 
-	// get release metadata
-	$.ajax({
-		method: 'GET',
-		url: 'https://musicbrainz.org/ws/2/release?release-group=' + mbid + '&inc=url-rels',
-	       	success: enterRelease,
-		error: function(xml) {
-			console.log("Release request failed");
-		}
-	});
+		// get links from connected releases
+		$.ajax({
+			method: 'GET',
+			url: 'https://musicbrainz.org/ws/2/release?release-group=' + mbid + '&inc=url-rels',
+			success: setDescription,
+			error: function(xml) {
+				console.log("Release request failed");
+			}
+		});
+	} else if (entity == "release") {
+		// get release metadata
+		$.ajax({
+			method: 'GET',
+			url: 'https://musicbrainz.org/ws/2/release/' + mbid + '?inc=artists+release-groups+url-rels',
+			success: enterRelease,
+			error: function(xml) {
+				console.log("Release request failed");
+			}
+		});
+	}
 
 	// allow all formats, bitrates and media
 	$('#toggle_formats').prop("checked", true).change();
