@@ -22,6 +22,10 @@ function importMetadata(){
 
 	var input = $("#mbid_box").val();
 	var mbid = input.match("[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+")[0];
+	entity = null;
+	setEntity(input, mbid);
+	console.log(entity + " found");
+
 	url = 'http://musicbrainz.org/release-group/' + mbid;
 
 	// get release group metadata
@@ -192,4 +196,30 @@ function setArtists(xml) {
 			$('[name="importance[]"]').eq(index).val(2);	
 		}
 	});
+}
+
+// Examine the type of entity by performing AJAX requests
+function setEntity(input, mbid) {
+	if (input.indexOf("release-group") != -1) {
+		entity = "release-group";
+	} else if (input.indexOf("release") != -1) {
+		entity = "release";
+	} else {
+		// if entity not stated in input
+		$.ajax({
+			method: 'GET',
+			url: 'https://musicbrainz.org/ws/2/release-group/' + mbid,
+			success: function() { entity = "release-group"; },
+			error: function() { console.log("Entity is not release group"); },
+			async: false
+		});
+
+		$.ajax({
+			method: 'GET',
+			url: 'https://musicbrainz.org/ws/2/release/' + mbid,
+			success: function() { entity = "release"; },
+			error: function() { console.log("Entity is not release"); },
+			async: false
+		});
+	}
 }
