@@ -175,7 +175,6 @@ function reset() {
 	$('textarea[name="description"]').val("");
 
 	while ($("#artistfields input").length != 1) {
-		console.log($("#artistfields input").length);
 		$("#artistfields a.brackets:nth-of-type(2)").click();
 	}
 }
