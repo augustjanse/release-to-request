@@ -69,16 +69,7 @@ function enterReleaseGroup(xml) {
 }
 
 function enterRelease(xml) {
-	// get URL relationships
-	text = "Any release of this accepted. Thanks!\n\n";
-	text += "[b]MusicBrainz[/b]\n[*]" + url + "\n";
-
-	listUrls(xml, "download for free", "Download for free");
-	listUrls(xml, "purchase for download", "Purchase for download");
-	listUrls(xml, "purchase for mail-order", "Purchase for mail-order");
-	listUrls(xml, "amazon asin", "Amazon");
-
-	$('textarea[name="description"]').val(text.trim());
+	setDescription(xml);
 }
 
 function listUrls(xml, type, intro) {
@@ -222,4 +213,17 @@ function setEntity(input, mbid) {
 			async: false
 		});
 	}
+}
+
+function setDescription(xml) {
+	// get URL relationships
+	text = "Any release of this accepted. Thanks!\n\n";
+	text += "[b]MusicBrainz[/b]\n[*]" + url + "\n";
+
+	listUrls(xml, "download for free", "Download for free");
+	listUrls(xml, "purchase for download", "Purchase for download");
+	listUrls(xml, "purchase for mail-order", "Purchase for mail-order");
+	listUrls(xml, "amazon asin", "Amazon");
+
+	$('textarea[name="description"]').val(text.trim());
 }
