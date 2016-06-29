@@ -2,8 +2,8 @@
 // @name        Release to request
 // @description	Import metadata from a MusicBrainz release group into a What.CD request
 // @namespace   http://janse.se/
-// @include     https://what.cd/requests.php?action=new
-// @version     1.0
+// @include     https://what.cd/requests.php?action=new*
+// @version     1.0.1
 // @grant       none
 // ==/UserScript==
 
